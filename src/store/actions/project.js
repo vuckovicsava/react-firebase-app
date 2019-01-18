@@ -36,3 +36,22 @@ export const getProjects = () => {
     })
   }
 }
+
+export const getSingleProject = id => {
+  return dispatch => {
+    firestore.collection('projects').doc(id).get()
+    .then(doc => {
+      if (doc.exists) {
+      dispatch({ type: 'GET_SINGLE_PROJECT', project: {
+        id: doc.id,
+        ...doc.data()
+      }})
+      } else {
+        dispatch({ type: 'GET_SINGLE_PROJECT_ERR', err: 'No such document' })
+      }
+    })
+    .catch(err => {
+      dispatch({ type: 'GET_SINGLE_PROJECT_ERR', err })
+    })
+  }
+}

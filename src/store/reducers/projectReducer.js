@@ -13,6 +13,11 @@ const projectReducer = (state = initState, action) => {
     case 'GET_PROJECTS_ERR':
       console.log('ERROR: ', action.err)
       return state;
+    case 'GET_SINGLE_PROJECT':
+      return { projects: [action.project] }
+    case 'GET_SINGLE_PROJECT_ERR':
+      console.log('ERROR: ', action.err)
+      return state;
     case 'CREATE_PROJECT':
       return state;
     case 'CREATE_PROJECT_ERROR':

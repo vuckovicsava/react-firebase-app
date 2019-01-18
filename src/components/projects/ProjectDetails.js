@@ -1,23 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getSingleProject } from '../../store/actions/project';
 
-const ProjectDetails = (props) => {
-  const id = props.match.params.id;
+class ProjectDetails extends Component {
+  componentDidMount() {
+    this.props.getSingleProject(this.props.match.params.id);
+  }
 
-  return (
-    <div className="container section project-details">
-      <div className="card z-depth-0">
-        <div className="card-content">
-          <span className="card-title">Project Title - {id}</span>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae temporibus consequuntur quisquam expedita vero corrupti accusantium illum sunt, officia rem, quia itaque voluptates, officiis veritatis blanditiis dolorem tempore sapiente sequi?</p>
+  render() {
+    if (this.props.project) {
+      const { title, content, authorFirstName, authorLastName } = this.props.project;
+      return (
+        <div className="container section project-details">
+          <div className="card z-depth-0">
+            <div className="card-content">
+              <span className="card-title">{title}</span>
+              <p>{content}</p>
+            </div>
+      
+            <div className="card-action gret lighten-4 grey-text">
+              <div>Posted by {authorFirstName} {authorLastName}</div>
+              <div>2nd September, 2am</div>
+            </div>
+          </div>
         </div>
-  
-        <div className="card-action gret lighten-4 grey-text">
-          <div>Posted by Sava Vuckovic</div>
-          <div>2nd September, 2am</div>
-        </div>
-      </div>
-    </div>
-  );
+      );
+    } else {
+      return (
+        <div>Loading</div>
+      )
+    }
+  }
 }
 
-export default ProjectDetails;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    project: state.project.projects.find(proj => proj.id === ownProps.match.params.id)
+  }
+}
+
+export default connect(mapStateToProps, { getSingleProject })(ProjectDetails);
