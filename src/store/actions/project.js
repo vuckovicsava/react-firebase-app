@@ -1,7 +1,7 @@
 import firestore from '../../config/firebase';
 
 export const createProject = project => {
-  return (dispatch, getState) => {
+  return dispatch => {
     firestore.collection('projects').add({
       ...project,
       authorFirstName: 'Sava',
@@ -14,6 +14,25 @@ export const createProject = project => {
     })
     .catch(err => {
       dispatch({ type: 'CREATE_PROJECT_ERROR', err })
+    })
+  }
+}
+
+export const getProjects = () => {
+  return dispatch => {
+    firestore.collection('projects').get()
+    .then(querySnapshot => {
+      const results = [];
+      querySnapshot.forEach(doc => {
+        results.push({
+          id: doc.id,
+          ...doc.data()
+        })
+      });
+      dispatch({ type: 'GET_PROJECTS', projects: results });
+    })
+    .catch(err => {
+      dispatch({ type: 'GET_PROJECTS_ERR', err })
     })
   }
 }

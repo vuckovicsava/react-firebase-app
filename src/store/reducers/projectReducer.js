@@ -8,6 +8,11 @@ const initState = {
 
 const projectReducer = (state = initState, action) => {
   switch (action.type) {
+    case 'GET_PROJECTS':
+      return { projects: action.projects };
+    case 'GET_PROJECTS_ERR':
+      console.log('ERROR: ', action.err)
+      return state;
     case 'CREATE_PROJECT':
       return state;
     case 'CREATE_PROJECT_ERROR':
