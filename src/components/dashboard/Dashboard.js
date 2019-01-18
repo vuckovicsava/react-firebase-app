@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Notifications from './Notifications';
 import ProjectList from '../projects/ProjectList';
 import { connect } from 'react-redux';
-import { getProjects } from '../../store/actions/project';
+import { getProjects } from '../../store/actions/projectActions';
 
 class Dashboard extends Component {
   componentDidMount() {

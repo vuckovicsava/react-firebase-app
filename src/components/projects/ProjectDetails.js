@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getSingleProject } from '../../store/actions/project';
+import { getSingleProject } from '../../store/actions/projectActions';
 
 class ProjectDetails extends Component {
   componentDidMount() {
